@@ -26,6 +26,28 @@ class MoneyTest {
     }
 
     @Test
+    void shouldCompareMonetaryValues(){
+        Money greater = Money.of("100.00");
+        Money smaller = Money.of("50.00");
+        Money equal = Money.of("100.0");
+
+        assertTrue(greater.isGreaterThan(smaller));
+        assertFalse(greater.isGreaterThan(equal));
+        assertFalse(smaller.isGreaterThan(greater));
+    }
+
+    @Test
+    void shouldCompareNegativeValues(){
+        Money first = Money.of("-10.00");
+        Money second = Money.of("-20.00");
+        Money zero = Money.of("0");
+
+        assertTrue(first.isGreaterThan(second));
+        assertTrue(zero.isGreaterThan(first));
+        assertFalse(second.isGreaterThan(zero));
+    }
+
+    @Test
     void equalityAndHashCodeUseNormalizedValue() {
         Money first = Money.of("1.0");
         Money second = Money.of("1.000");

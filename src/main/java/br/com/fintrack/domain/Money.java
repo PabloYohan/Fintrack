@@ -28,6 +28,10 @@ public final class Money {
         return new Money(amount.subtract(Objects.requireNonNull(other, "other").amount));
     }
 
+    public boolean isGreaterThan(Money other) {
+        return amount.compareTo(Objects.requireNonNull(other).amount) > 0;
+    }
+
     @Override
     public boolean equals(Object other) {
         return this == other || (other instanceof Money money && amount.equals(money.amount));
