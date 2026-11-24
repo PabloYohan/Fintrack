@@ -27,6 +27,26 @@ public class Transaction {
         this.type = Objects.requireNonNull(type, "type não pode ser nulo");
     }
 
+    public UUID getId() {
+        return id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Money getValue() {
+        return value;
+    }
+
+    public LocalDate getExpectedDate() {
+        return expectedDate;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
     public static Transaction create(String description, Money value, LocalDate expectedDate, TransactionType type) {
         return new Transaction(
                 UUID.randomUUID(),
