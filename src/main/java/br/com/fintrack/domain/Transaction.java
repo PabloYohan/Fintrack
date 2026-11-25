@@ -18,13 +18,18 @@ public class Transaction {
             throw new IllegalArgumentException("description não pode estar em branco");
         }
         this.description = normalizedDescription;
+
+        this.value = requirePositiveValue(value);
+        this.expectedDate = Objects.requireNonNull(expectedDate, "expectedDate não pode ser nulo");
+        this.type = Objects.requireNonNull(type, "type não pode ser nulo");
+    }
+
+    private static Money requirePositiveValue(Money value){
         Money validatedValue = Objects.requireNonNull(value, "value não pode ser nulo");
         if(!validatedValue.isGreaterThan(Money.of("0.00"))) {
             throw new IllegalArgumentException("O valor deve ser maior que 0");
         }
-        this.value = validatedValue;
-        this.expectedDate = Objects.requireNonNull(expectedDate, "expectedDate não pode ser nulo");
-        this.type = Objects.requireNonNull(type, "type não pode ser nulo");
+        return validatedValue;
     }
 
     public UUID getId() {
@@ -55,5 +60,13 @@ public class Transaction {
                 expectedDate,
                 type
         );
+    }
+
+    public void changeValue(Money value){
+        this.value = requirePositiveValue(value);
+    }
+
+    public void reschedule(LocalDate date){
+        this.expectedDate = Objects.requireNonNull(date, "A nova data não pode ser nula.");
     }
 }
